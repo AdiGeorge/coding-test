@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  universe-client:
+    build:
+      context: ./client
+      dockerfile: ./deploy/Dockerfile
+    container_name: universe-client
+    environment:
+      - UNIVERSE_URL=http://universe-generator:3000
+    restart: always
+    hostname: universe-client
+    volumes:
+      - ./client:/client
+    ports:
+      - 4041:3001
+
+  universe-generator:
+    build:
+      context: ./event-generator
+      dockerfile: ./deploy/Dockerfile
+    container_name: universe-generator
+    restart: always
+    hostname: universe-generator
+    volumes:
+      - ./event-generator:/event-generator
